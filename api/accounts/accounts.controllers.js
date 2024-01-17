@@ -6,16 +6,13 @@ const getAllAccounts = async (req, res) => {
     const accounts = await Accounts_.find();
     return res.json(accounts);
   } catch (error) {
-    return res.status(404).json({ "Server Error": error });
+    return res.status(500).json({ "Server Error": error });
   }
 };
 
 const createAccount = async (req, res) => {
   try {
-    const newAccount = await Accounts_.create({
-      username: req.body.username,
-      funds: req.body.funds,
-    });
+    const newAccount = await Accounts_.create({req.body});
     return res.json(newAccount);
   } catch (error) {
     return res.status(500).json({ "Server Error": error });
@@ -25,13 +22,14 @@ const createAccount = async (req, res) => {
 const updateAccount = async (req, res) => {
   try {
     const id = req.params.id;
-    const updatedAccount = await Accounts_.splice(id, 1, {
-      username: req.body.username,
-      funds: req.body.funds,
-    });
+    // const updatedAccount = await Accounts_.splice(id, 1, {
+    //   username: req.body.username,
+    //   funds: req.body.funds,
+    // });
+    const updatedAccount = await Accounts_.findById(id, req.body);
     return res.json(updatedAccount);
   } catch (error) {
-    return res.status(404).json({ "Server Error": error });
+    return res.status(500).json({ "Server Error": error });
   }
 };
 
@@ -41,12 +39,12 @@ const deleteAccount = async (req, res) => {
     const deletedAccount = await Accounts_.splice(id, 1);
     return res.json(deletedAccount);
   } catch (error) {
-    return res.status(404).json({ "Server Error": error });
+    return res.status(500).json({ "Server Error": error });
   }
 };
 
 module.exports = {
-  accountsRouter,
+  // accountsRouter,
   getAllAccounts,
   createAccount,
   deleteAccount,
