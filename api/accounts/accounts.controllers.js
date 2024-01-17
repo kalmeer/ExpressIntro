@@ -1,5 +1,5 @@
 let accounts = require("./accounts.model");
-const Accounts_ = require("../../model/accounts_");
+const Accounts_ = require("../../model/Accounts_");
 
 const getAllAccounts = async (req, res) => {
   try {
@@ -18,7 +18,7 @@ const createAccount = async (req, res) => {
     });
     return res.json(newAccount);
   } catch (error) {
-    return res.status(404).json({ "Server Error": error });
+    return res.status(500).json({ "Server Error": error });
   }
 };
 
