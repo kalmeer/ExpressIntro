@@ -1,6 +1,4 @@
 const express = require("express");
-const app = express();
-const accountsRouter = require("./accounts.routes");
 const {
   getAllAccounts,
   updateAccount,
@@ -9,11 +7,10 @@ const {
 } = require("./accounts.controllers");
 
 const router = express.Router();
-accounts.routes.use(express.json());
 
-accounts.routs.get("/", getAllAccounts);
-accounts.routs.put("/", updateAccount);
-accounts.routes.delete("/", deleteAccount);
-accounts.routes.post("/", createAccount);
+router.get("/", getAllAccounts);
+router.put("/", updateAccount);
+router.delete("/", deleteAccount);
+router.post("/", createAccount);
 
 module.exports = router;

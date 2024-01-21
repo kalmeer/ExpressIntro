@@ -1,10 +1,14 @@
+//const router = express.Router();
 const express = require("express");
-const router = express.Router();
-app.use(express.json());
+const connectDB = require("./database");
+const app = express();
 const accountsRouter = require("./api/accounts/accounts.routes");
-const accounts = require("./accounts");
-const connectDb = require("./database");
+
+//const accounts = require("./accounts");
+app.use(express.json());
+app.use("/api", accountsRouter);
+connectDB();
 
 const NUM = 8000;
-connectDb();
+
 app.listen(NUM, () => console.log(`a ${NUM}`));

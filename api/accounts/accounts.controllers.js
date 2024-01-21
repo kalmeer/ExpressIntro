@@ -1,9 +1,9 @@
-let accounts = require("./accounts.model");
+//let accounts = require("./accounts.model");
 const Accounts_ = require("../../model/Accounts_");
 
 const getAllAccounts = async (req, res) => {
   try {
-    const accounts = await Accounts_.find();
+    const accounts = await Accounts_.find(req);
     return res.json(accounts);
   } catch (error) {
     return res.status(500).json({ "Server Error": error });
@@ -12,7 +12,7 @@ const getAllAccounts = async (req, res) => {
 
 const createAccount = async (req, res) => {
   try {
-    const newAccount = await Accounts_.create({req.body});
+    const newAccount = await Accounts_.create(req.body);
     return res.json(newAccount);
   } catch (error) {
     return res.status(500).json({ "Server Error": error });
@@ -22,11 +22,7 @@ const createAccount = async (req, res) => {
 const updateAccount = async (req, res) => {
   try {
     const id = req.params.id;
-    // const updatedAccount = await Accounts_.splice(id, 1, {
-    //   username: req.body.username,
-    //   funds: req.body.funds,
-    // });
-    const updatedAccount = await Accounts_.findById(id, req.body);
+    const updatedAccount = await Accounts_.findByIdAndUpdate(id, req.body);
     return res.json(updatedAccount);
   } catch (error) {
     return res.status(500).json({ "Server Error": error });
@@ -36,7 +32,7 @@ const updateAccount = async (req, res) => {
 const deleteAccount = async (req, res) => {
   try {
     const id = req.params.id;
-    const deletedAccount = await Accounts_.splice(id, 1);
+    const deletedAccount = await Accounts_.findByIdAndDelete(id, req.body);
     return res.json(deletedAccount);
   } catch (error) {
     return res.status(500).json({ "Server Error": error });
@@ -44,7 +40,6 @@ const deleteAccount = async (req, res) => {
 };
 
 module.exports = {
-  // accountsRouter,
   getAllAccounts,
   createAccount,
   deleteAccount,
